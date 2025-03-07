@@ -1,0 +1,6 @@
+metadata_version: 1
+name: behavior_video_qc_visualization
+description: collects results from processing capsules in behavior video qc pipeline,
+  plots them and saves.
+authors:
+- name: Iryna Yavorska
