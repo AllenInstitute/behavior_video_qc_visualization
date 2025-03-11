@@ -15,6 +15,15 @@ RUN cd /.code-server \
     && rm code-server.tar.gz \
     && ln -s /.code-server/code-server-4.95.3-linux-amd64/bin/code-server  /usr/bin/code-server
 
+RUN pip3 install -U --no-cache-dir \
+    matplotlib \
+	pandas \
+    numpy \
+	scikit-learn \
+	seaborn \
+	scipy \ 
+    pyyaml \
+
 RUN mkdir -p /.vscode/extensions \
     && code-server --extensions-dir="/.vscode/extensions" --install-extension REditorSupport.R \
     && code-server --extensions-dir="/.vscode/extensions" --install-extension continue.continue \
