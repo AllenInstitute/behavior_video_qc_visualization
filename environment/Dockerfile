@@ -16,13 +16,16 @@ RUN cd /.code-server \
     && ln -s /.code-server/code-server-4.95.3-linux-amd64/bin/code-server  /usr/bin/code-server
 
 RUN pip3 install -U --no-cache-dir \
+    opencv-python==4.10.0.84 \
     matplotlib \
 	pandas \
     numpy \
 	scikit-learn \
 	seaborn \
 	scipy \ 
-    pyyaml \
+    pyyaml 
+
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
 RUN mkdir -p /.vscode/extensions \
     && code-server --extensions-dir="/.vscode/extensions" --install-extension REditorSupport.R \
