@@ -2,8 +2,8 @@
 	"version": 1,
 	"attached_datasets": [
 		{
-			"id": "89d11846-3a8f-476d-9bb0-5e0f0ef795ce",
-			"mount": "Thyme_PCA_031025"
+			"id": "2707a158-4272-4d84-b186-1de26e884255",
+			"mount": "multiplane-ophys_783551_motion-energy-output"
 		}
 	]
 }
