@@ -98,6 +98,31 @@ def save_figure(fig: plt.Figure, save_path: str, fig_name: str, dpi: int = 300,
     print(f"Figure saved at: {figpath}")
 
 
+def check_traces(x, y):
+    """
+    Ensures x and y are not empty and have the same length.
+    If one is longer, trims it to match the length of the shorter.
+
+    Args:
+        x (array-like): First sequence.
+        y (array-like): Second sequence.
+
+    Returns:
+        tuple: Trimmed x and y arrays of equal length.
+
+    Raises:
+        ValueError: If x or y is empty.
+    """
+    if x is None or y is None or len(x) == 0 or len(y) == 0:
+        raise ValueError("Input arrays must not be empty.")
+
+    if len(x) == len(y):
+        return x, y
+
+    min_len = min(len(x), len(y))
+    return x[:min_len], y[:min_len]
+    
+
 def load_pickle_file(file_path: str):
     """
     Load a pickle file and return the deserialized object.
@@ -120,3 +145,38 @@ def load_pickle_file(file_path: str):
             return pickle.load(file)
     except (pickle.UnpicklingError, EOFError) as e:
         raise ValueError(f"Error loading pickle file: {e}")
+
+
+def standardize_masks(masks) -> np.ndarray:
+    """
+    Standardizes a 2D mask by subtracting its mean and dividing by its standard deviation.
+
+    Args:
+        mean_mask (np.ndarray): The input 2D array.
+
+    Returns:
+        np.ndarray: The standardized mask.
+
+    Raises:
+        ValueError: If the standard deviation is zero.
+        TypeError: If input is not a NumPy array.
+    """
+    if not isinstance(masks, np.ndarray):
+        raise TypeError("mean_mask must be a NumPy array.")
+
+    mean = masks.mean(axis=1).mean(axis=1)
+    std = masks.mean(axis=1).mean(axis=1)
+    mean = np.reshape(mean, (mean.shape[0],1,1))
+    std = np.reshape(std, (std.shape[0],1,1))
+
+    # Validate standard deviation
+    if std.any() == 0:
+        raise ValueError("Standard deviation is zero, leading to division errors!")
+
+    # Standardize the mean mask
+    standardized_masks = (masks - mean) / std
+
+    if np.isnan(standardized_masks).any():
+        logger.warning("Standardized mean mask contains NaN values.")
+
+    return standardized_masks
