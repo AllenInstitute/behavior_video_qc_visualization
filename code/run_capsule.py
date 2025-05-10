@@ -1,7 +1,6 @@
 
 import os
 import json
-import cv2
 import pickle
 import numpy as np
 from tqdm import tqdm
@@ -36,7 +35,7 @@ def load_pkl_and_json(folder_path):
 
     return ipca, pca_dict
 
-for json_file in json_paths:
+for json_file in tqdm(json_paths):
     folder_path = Path(json_file).parent
     ipca, pca_dict = load_pkl_and_json(folder_path)
     results_path = pca_dict['top_results_path']

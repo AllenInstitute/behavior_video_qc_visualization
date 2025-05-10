@@ -4,6 +4,10 @@
 		{
 			"id": "2707a158-4272-4d84-b186-1de26e884255",
 			"mount": "multiplane-ophys_783551_motion-energy-output"
+		},
+		{
+			"id": "9aa6e0ad-fd32-453b-9549-78ca6ca33b71",
+			"mount": "multiplane-ophys_783551_motion-energy-output_v2"
 		}
 	]
 }
