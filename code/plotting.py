@@ -124,11 +124,13 @@ def plot_pca_components_traces(pca_motion_energy, x_trace_seconds, component_ind
         ax.set_ylabel(f'PCA {component_indices[i] + 1}', fontsize=14)
         ax.set_title(f'PCA {component_indices[i] + 1}', fontsize=16)
         ax.tick_params(axis='both', which='major', labelsize=14)
+        ax.set_xlim([0, x_trace_seconds[-1]])
+        ax.set_ylim([np.nanmean(trace)-np.nanstd(trace)*5, np.nanmean(trace)+np.nanstd(trace)*5])
         ax.grid(True)
 
     axes[-1].set_xlabel('Time (s)', fontsize=16)
     plt.tight_layout()
-    return fig, axes
+    return fig
 
 
 

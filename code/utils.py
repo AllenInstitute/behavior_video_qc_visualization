@@ -49,18 +49,18 @@ def load_npz_file(npz_file_path: str) -> dict:
     return npz_data
 
 
-def get_x_trace_sec(me_frames: np.ndarray, fps: int = 60) -> np.ndarray:
+def get_x_trace_sec(traces: np.ndarray, fps: int = 60) -> np.ndarray:
     """
     Generate an x-axis trace in seconds for motion energy frames.
 
     Args:
-        me_frames (numpy.ndarray): Array of motion energy frames.
+        traces (numpy.ndarray): Array or list.
         fps (int, optional): Frames per second. Defaults to 60.
 
     Returns:
         numpy.ndarray: Time values in seconds.
     """
-    return np.round(np.arange(1, me_frames.shape[0]+1) / fps, 2)
+    return np.round(np.arange(1, len(traces)+1) / fps, 2)
 
 
 def remove_outliers_99(arr: np.ndarray, percentile = 99) -> np.ndarray:
@@ -121,7 +121,7 @@ def check_traces(x, y):
 
     min_len = min(len(x), len(y))
     return x[:min_len], y[:min_len]
-    
+
 
 def load_pickle_file(file_path: str):
     """
