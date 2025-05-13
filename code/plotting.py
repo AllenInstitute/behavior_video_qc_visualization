@@ -118,7 +118,8 @@ def plot_pca_components_traces(pca_motion_energy, x_trace_seconds, component_ind
         fig, axes = plt.subplots(len(component_indices), 1, figsize=(10, 2 * len(component_indices)))
 
     for i, ax in enumerate(axes):
-        trace = utils.remove_outliers_99(pca_motion_energy[:, component_indices[i]], 99)
+        #trace = utils.remove_outliers_99(pca_motion_energy[:, component_indices[i]], 99)
+        trace = pca_motion_energy[:, component_indices[i]]
         smoothed_trace = utils.smooth_trace(trace=trace)
         smoothed_trace, x_trace_seconds = utils.check_traces(smoothed_trace, x_trace_seconds)
         ax.plot(x_trace_seconds, smoothed_trace)
