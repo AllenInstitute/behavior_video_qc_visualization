@@ -121,7 +121,7 @@ def plot_pca_components_traces(pca_motion_energy, x_trace_seconds, component_ind
         trace = utils.remove_outliers_99(pca_motion_energy[:, component_indices[i]], 99)
         smoothed_trace = utils.smooth_trace(trace=trace)
         smoothed_trace, x_trace_seconds = utils.check_traces(smoothed_trace, x_trace_seconds)
-        ax.plot(x_trace_seconds, trace)
+        ax.plot(x_trace_seconds, smoothed_trace)
         ax.set_ylabel(f'PCA {component_indices[i] + 1}', fontsize=14)
         ax.set_title(f'PCA {component_indices[i] + 1}', fontsize=16)
         ax.tick_params(axis='both', which='major', labelsize=14)
