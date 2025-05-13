@@ -4,6 +4,7 @@ import numpy as np
 import os
 import pickle 
 import matplotlib.pyplot as plt
+from scipy.ndimage import uniform_filter1d
 
 
 def load_pickle_file(file_path: str):
@@ -180,3 +181,29 @@ def standardize_masks(masks) -> np.ndarray:
         logger.warning("Standardized mean mask contains NaN values.")
 
     return standardized_masks
+
+
+def smooth_trace(trace: np.ndarray) -> np.ndarray:
+    """
+    Smooths the input trace using a moving average filter.
+    The window size is set to 5% of the trace length.
+
+    Args:
+        trace (np.ndarray): The input trace to be smoothed.
+
+    Returns:
+        np.ndarray: The smoothed trace.
+    """
+    if not isinstance(trace, np.ndarray):
+        raise TypeError("Input trace must be a NumPy array.")
+    
+    if trace.ndim != 1:
+        raise ValueError("Input trace must be a 1D array.")
+    
+    if len(trace) == 0:
+        raise ValueError("Input trace is empty.")
+    
+    window_size = max(1, int(len(trace) * 0.05))  # Ensure window size is at least 1
+    smoothed_trace = uniform_filter1d(trace, size=window_size)
+    
+    return smoothed_trace
