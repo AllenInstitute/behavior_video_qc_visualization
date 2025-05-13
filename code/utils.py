@@ -186,7 +186,7 @@ def standardize_masks(masks) -> np.ndarray:
 def smooth_trace(trace: np.ndarray) -> np.ndarray:
     """
     Smooths the input trace using a moving average filter.
-    The window size is set to 5% of the trace length.
+    The window size is set to 0.01% of the trace length.
 
     Args:
         trace (np.ndarray): The input trace to be smoothed.
@@ -203,7 +203,17 @@ def smooth_trace(trace: np.ndarray) -> np.ndarray:
     if len(trace) == 0:
         raise ValueError("Input trace is empty.")
     
-    window_size = max(1, int(len(trace) * 0.05))  # Ensure window size is at least 1
-    smoothed_trace = uniform_filter1d(trace, size=window_size)
+    window_size = max(1, int(len(trace) * 0.001))  # Ensure window size is at least 1
+    
+    # Handle NaNs by replacing them with the mean of the non-NaN values
+    nan_mask = np.isnan(trace)
+    if nan_mask.all():
+        return trace  # Return as-is if all values are NaN
+    
+    trace_no_nans = np.copy(trace)
+    trace_no_nans[nan_mask] = np.nanmean(trace)
+
+    # Apply smoothing
+    smoothed_trace = uniform_filter1d(trace_no_nans, size=window_size)
     
     return smoothed_trace
