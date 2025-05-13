@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"attached_datasets": [
+		{
+			"id": "9aa6e0ad-fd32-453b-9549-78ca6ca33b71",
+			"mount": "multiplane-ophys_783551_motion-energy-output_v2"
+		}
+	]
+}
